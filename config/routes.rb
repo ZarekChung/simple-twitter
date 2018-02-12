@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   # 請依照專案指定規格來設定路由
   root "tweets#index" #dafault page
   resources :tweets, only: [:index,:create] do
+     resources :replies, only: [:index,:create]
      member do
-      get :replies , :to => 'replies#index'
-      post '/replies',:as => "replies_new", :to => 'replies#create'
+      #get :replies , :to => 'replies#index'
+      #post '/replies',:as => "replies_new", :to => 'replies#create'
 
       post :like
       post :unlike

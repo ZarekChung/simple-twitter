@@ -1,18 +1,23 @@
 class FollowshipsController < ApplicationController
-  def create
-      @followship = current_user.followships.build(following_id: params[:following_id])
-      
+  def create 
+      @followship = current_user.followships.build(following_id: params[:following_id])   
       @following_user = User.find(@followship.following_id)
     
+      if current_user.profile?(@following_user)
+      flash[:notice] = "can not follow self"
+      redirect_to tweets_path
+      return false
+      end
+
     if @followship.save
       #flash 會留到下一個request
       flash[:notice] = "followship was scuccessfully created"
       @following_user.count_followers
       redirect_back(fallback_location: root_path)
+
     else
       #flash.now 只存在現在這個request
-      flash[:alert] = @followship.errors.full_messages.to_sentence
-      
+      flash[:alert].now = @followship.errors.full_messages.to_sentence
       redirect_back(fallback_location: root_path)
     end
   end

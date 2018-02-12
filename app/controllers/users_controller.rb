@@ -1,7 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_tweet, only: [:tweets,:edit, :update,:likes]
   def tweets
-    @user_tweets = User.find(params[:id]).tweets.order(created_at: :desc)
+    @tweets = User.find(params[:id]).tweets.order(created_at: :desc)
+  end
+
+  def edit
+    if !current_user.profile?(@users) 
+      flash[:notice] ="users should be yourself."
+       redirect_to tweets_user_path(@users)
+    end
   end
 
   def update

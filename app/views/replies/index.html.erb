@@ -26,18 +26,18 @@
     <div class="row">
       
 <div class="form-group">
-  <% tweet = @tweet %>
+
    
   
     <div id="user-pic" class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
-    <%= image_tag tweet.user.avatar ,class:"img-circle img-responsive img-profile"%>
+    <%= image_tag @tweet.user.avatar ,class:"img-circle img-responsive img-profile"%>
     </div>
     
     <div class="col-xs-12 col-sm-7 col-md-8 col-lg-10">
-    <h4><%= link_to "@#{tweet.user.name}" , tweets_user_path(tweet.user)%>, <%= tweet.created_at.strftime("%F")%>, <%=tweet.created_at.strftime(" %H:%M ")%></h4>
-      <p><%= truncate(tweet.description, length: 300)%></p>
-     <div> <%= link_to "Replay(#{tweet.replies_count})" , replies_tweet_path(tweet),class:"btn btn-link"%>
-       <%= render partial: "shared/like", locals: {tweet: tweet} %> 
+    <h4><%= link_to "@#{@tweet.user.name}" , tweets_user_path(@tweet.user)%>, <%= @tweet.created_at.strftime("%F")%>, <%=@tweet.created_at.strftime(" %H:%M ")%></h4>
+      <p><%= truncate(@tweet.description, length: 300)%></p>
+     <div> <%= link_to "Reply(#{@tweet.replies_count})" , tweet_replies_path(@tweet),class:"btn btn-link"%>
+       <%= render partial: "shared/like", locals: {tweet: @tweet} %> 
               </div>
     </div>
 
@@ -46,7 +46,7 @@
 </div>
       
     <h3>Replies</h3>
-      <% @tweet.replies.each do |reply| %>
+      <% @replies.each do |reply| %>
       <div id="tweets-list" >
         <div class="row">
     <div class="form-group">
@@ -69,7 +69,7 @@
 <% end %>
 
 <div class="form-group">
-       <%= form_for(@replies, url:  replies_new_tweet_path(@tweet))  do |f| %> 
+       <%= form_for [@tweet,@reply] do |f| %> 
         <form> 
         <div class="form-group">
     

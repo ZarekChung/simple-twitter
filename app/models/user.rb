@@ -11,10 +11,11 @@ class User < ApplicationRecord
    validates_presence_of :name
 
   # 加上驗證 name 不能重覆 (關鍵字提示: uniqueness)
-  validates :name, uniqueness: { message: "name has already, please change it" }
+  validates :name, uniqueness: true
   
   #關聯
-  has_many :tweets,dependent: :destroy 
+  has_many :tweets, dependent: :destroy 
+  #scope :ordered_by_tweets, -> { joins(:tweet).order('tweet.user_id') }
 
   has_many :replies, dependent: :restrict_with_error
   has_many :tweet_replies, through: :replies

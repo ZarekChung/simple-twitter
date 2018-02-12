@@ -1,5 +1,5 @@
 class Tweet < ApplicationRecord
-  belongs_to :user
+  belongs_to :user 
   validates_length_of :description, maximum: 140
   has_many :replies, dependent: :destroy 
 
@@ -19,5 +19,6 @@ class Tweet < ApplicationRecord
   def is_liked?(user)
     self.liked_users.include?(user)
   end
-  
+
+   
 end
